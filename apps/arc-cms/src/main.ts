@@ -1,5 +1,11 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import { add } from "@arc/utils";
+import "./style.css";
+import App from "./App.vue";
 
-createApp(App).mount('#app')
+(function () {
+  console.log("🚀 ~ :", add(15, 10));
+})();
+
+
+createApp(App).mount("#app")
