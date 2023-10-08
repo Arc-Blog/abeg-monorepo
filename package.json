@@ -1,0 +1,23 @@
+{
+  "name": "@arc/blog",
+  "private": true,
+  "version": "0.1.0",
+  "description": "The foreground is nextjs administration and the vue3 microservice nestjs blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blogs",
+    "vue3",
+    "nextjs",
+    "nestjs"
+  ],
+  "author": "echo9z",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.8.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
