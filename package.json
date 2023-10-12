@@ -5,7 +5,9 @@
   "description": "The foreground is nextjs administration and the vue3 microservice nestjs blog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "__eslit__comment__": "查阅eslint文档 https://eslint.org/docs/latest/use/command-line-interface 了解cli工具的options",
+    "lint": "eslint ./ --ext .ts,.js,.json --max-warnings=0",
+    "format": "prettier --config .prettierrc '.' --write"
   },
   "keywords": [
     "blogs",
