@@ -2,23 +2,27 @@
 const props = defineProps({
   prefix: {
     type: String,
-    default: "icon",
+    default: 'icon',
   },
-  iconClass: {// 指定svg icon名称
+  iconClass: {
+    // 指定svg icon名称
     type: String,
     required: false,
   },
-  color: { // use标签设置读取文档颜色»
+  color: {
+    // use标签设置读取文档颜色»
     type: String,
   },
-  size: { // svg 画布大小
+  size: {
+    // svg 画布大小
     type: String,
-    default: "1em",
+    default: '1em',
   },
 });
 
 const symbolId = computed(() => `#${props.prefix}-${props.iconClass}`);
-</script>cn
+</script>
+cn
 
 <template>
   <svg aria-hidden="true" class="svg-icon" :style="'width:' + size + ';height:' + size">

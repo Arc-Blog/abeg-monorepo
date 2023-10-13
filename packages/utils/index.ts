@@ -1,2 +1,2 @@
-import sum from './src/index.js'
-export const add = sum
+import sum from './src/index.js';
+export const add = sum;
