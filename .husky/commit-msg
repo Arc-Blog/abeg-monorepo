@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+# 在提交commit或者修改commit message对message进行效验
+npx --no -- commitlint --edit "$1"
