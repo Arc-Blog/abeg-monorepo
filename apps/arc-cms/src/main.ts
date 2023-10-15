@@ -16,7 +16,6 @@ import './styles/tailwind.css';
 // })();
 function test() {
   const a = 5;
-
   console.log(a + 1);
 }
 
