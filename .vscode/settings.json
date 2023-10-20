@@ -4,20 +4,27 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.organizeImports": true,
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true //自动格式化stylelint
   },
   "editor.formatOnSaveMode": "file",
   "editor.formatOnType": true,
   "editor.formatOnPaste": false,
+  // Stylelint 校验文件
+  "stylelint.validate": ["css", "scss", "vue", "html"],
   "[typescript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
       "source.organizeImports": true,
-      "source.fixAll.eslint": true
+      "source.fixAll.eslint": true,
+      "source.fixAll.stylelint": true
     },
     "editor.formatOnSaveMode": "file",
     "editor.formatOnType": true,
     "editor.formatOnPaste": false
+  },
+  "[json]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   }
 }

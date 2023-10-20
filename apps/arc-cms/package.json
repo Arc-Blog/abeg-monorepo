@@ -11,6 +11,7 @@
   "dependencies": {
     "@arc/utils": "workspace:^",
     "@vueuse/core": "^10.5.0",
+    "axios": "^1.5.1",
     "d3": "^7.8.5",
     "element-plus": "^2.3.14",
     "pinia": "^2.1.6",
