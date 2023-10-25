@@ -1,2 +1,6 @@
-import sum from './src/index';
-export const add = sum;
+import { aesDecrypt, aesEncrypt, compareSync } from './src/cryptogram';
+export default {
+  aesDecrypt,
+  aesEncrypt,
+  compareSync,
+};
