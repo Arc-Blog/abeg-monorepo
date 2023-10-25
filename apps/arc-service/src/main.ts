@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as compression from 'compression';
 import helmet from 'helmet';
 import { join } from 'path';
 import { AppModule } from './app.module';
@@ -26,6 +28,18 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   // 这是设置模板引擎, 需要先安装：pnpm add ejs
   app.setViewEngine('ejs');
+
+  // 使用压缩中间件启用 gzip 压缩
+  app.use(compression());
+
+  // 配置swagger文档
+  const config = new DocumentBuilder()
+    .setTitle('echo9z blog')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(
     PORT,

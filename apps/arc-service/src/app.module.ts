@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configuration from './config/configuration';
@@ -11,6 +12,20 @@ import configuration from './config/configuration';
       cache: true,
       // envFilePath: [parseEnv.path], // 会读取根文件下 .env文件 `${process.env.NODE_ENV}.env`
       load: [configuration], // 读取的是自定义配置文件 configuration.ts 数据配置文件
+    }),
+    // 设置对服务器请求次数
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        const throttle = config.get('throttle');
+        return [
+          {
+            ttl: throttle.ttl, // 1分钟
+            limit: throttle.limit, //请求100次
+          },
+        ];
+      },
     }),
   ],
   controllers: [AppController],
