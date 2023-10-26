@@ -8,7 +8,10 @@ import { AppModule } from './app.module';
 
 const PORT: string | number = process.env.APP_PORT || 18080;
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    // HTTP开启Connection: Keep-Alive
+    forceCloseConnections: true,
+  });
 
   // 路径前缀：如：http://www.test.com/api/v1/user
   app.setGlobalPrefix('api');
