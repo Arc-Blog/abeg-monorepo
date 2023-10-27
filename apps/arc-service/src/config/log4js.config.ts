@@ -56,7 +56,7 @@ const log4jsConfig = {
       category: 'mail', // category 类型
       keepFileExt: true,
     },
-    mysql: {
+    pgsql: {
       type: 'dateFile',
       filename: `${baseLogPath}/datasql/sql.log`,
       alwaysIncludePattern: true,
@@ -69,7 +69,7 @@ const log4jsConfig = {
       daysToKeep: 30,
       numBackups: 3,
       compress: true, // 配置日志文件是否压缩
-      category: 'mysql', // category 类型
+      category: 'pgsql', // category 类型
       keepFileExt: true,
     },
     // 异常日志
@@ -104,8 +104,8 @@ const log4jsConfig = {
       appenders: ['mail', 'errors'],
       level: 'info',
     },
-    mysql: {
-      appenders: ['mysql', 'errors'],
+    pgsql: {
+      appenders: ['pgsql', 'errors'],
       level: 'info',
     },
     http: {

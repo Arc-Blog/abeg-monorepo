@@ -1,10 +1,14 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as compression from 'compression';
+// import * as csurf from 'csurf';
 import helmet from 'helmet';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { ResponseInterceptor } from './interceptor/response/response.interceptor';
+import { RequestMiddleware } from './middleware/request/request.middleware';
+import { /* HttpExceptionFilter, */ AllExceptionFilter } from './filter';
 
 const PORT: string | number = process.env.APP_PORT || 18080;
 async function bootstrap() {
@@ -21,8 +25,11 @@ async function bootstrap() {
 
   // 防止跨站脚本攻击
   // 配置cross-origin 接口图片的资源光问题
-  app.use(helmet());
-  // app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+  // app.use(helmet());
+  app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+
+  //CSRF保护：跨站点请求伪造
+  // app.use(csurf());
 
   //配置静态资源目录
   app.useStaticAssets(join(__dirname, '..', 'public'));
@@ -39,10 +46,21 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('echo9z blog')
     .setDescription('The cats API description')
-    .setVersion('1.0')
+    .setVersion('0.0.1')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  // 添加中间件，监听所有的request路由，并打印日志
+  app.use(new RequestMiddleware().use);
+
+  // 捕获全局异常
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  // app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new AllExceptionFilter(httpAdapter as any));
+
+  // 全局统一响应
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   await app.listen(
     PORT,

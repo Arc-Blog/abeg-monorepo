@@ -6,9 +6,9 @@ import file from './uploadfile.conf';
 
 const envPath = join(
   __dirname,
-  '../config',
   `${process.env.NODE_ENV || 'development'}.config.yaml`,
 );
+console.log(envPath);
 
 const envConfig = yaml.load(readFileSync(envPath, 'utf8'));
 export default () => {

@@ -9,3 +9,81 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model arc_user {
+  user_id   String  @id @default(uuid())
+  user_name String @db.VarChar(100)
+  nickname String? @db.VarChar(100)
+  password String @db.VarChar(255)
+  email String? @unique @db.VarChar(255)
+  email_code String?  @db.VarChar(16)
+  openid String? @db.VarChar(255)
+  avatar String? @db.VarChar(255)
+  phone String @db.VarChar(255)
+  role Role @default(USER)
+  isActive Boolean @db.Boolean @default(true)
+  articles arc_article[] // 一对多 一个用户多个文章
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+}
+
+model arc_article {
+  id BigInt @id @db.BigInt
+  title String @db.VarChar(50)
+  content String @db.Text
+  content_html String @db.Text
+  summary String @db.Text
+  cover_url String @db.VarChar(255)
+  view_count Int @db.Integer
+  like_count Int @db.Integer
+  is_recommend Int @db.SmallInt
+  status Status @default(PUBLISH)
+  publish_time DateTime
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+  author arc_user @relation(fields: [author_id], references: [user_id])
+  author_id String @unique
+  // category_id arc_category @relation(fields: [author_id], references: [user_id])
+  // tags arc_tag[]
+}
+
+model arc_tag {
+  id     Int @id @default(autoincrement())
+  name String @db.VarChar(36)
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+}
+
+model arc_comment {
+  id     Int @id @default(autoincrement())
+  // Post   Post? @relation(fields: [postId], references: [id]) // A comment can have one post
+  postId Int?
+}
+
+model arc_category {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(36)
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+}
+
+model arc_page {
+  id Int @id @default(autoincrement())
+  page_name String @db.VarChar(36)
+  path String @db.VarChar(36)
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+}
+
+enum Role {
+  ROOT
+  ADMIN
+  USER
+  VISITOR
+}
+
+enum Status {
+  DRAFT
+  PUBLISH
+  DESTROY
+}

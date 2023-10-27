@@ -3,14 +3,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PrismaModule } from './prisma/prisma.module';
 import configuration from './config/configuration';
+import parseEnv from './config/onload.env';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // 全局导入
       cache: true,
-      // envFilePath: [parseEnv.path], // 会读取根文件下 .env文件 `${process.env.NODE_ENV}.env`
+      envFilePath: [parseEnv.path], // 会读取根文件下 .env文件 `${process.env.NODE_ENV}.env`
       load: [configuration], // 读取的是自定义配置文件 configuration.ts 数据配置文件
     }),
     // 设置对服务器请求次数
@@ -22,11 +24,12 @@ import configuration from './config/configuration';
         return [
           {
             ttl: throttle.ttl, // 1分钟
-            limit: throttle.limit, //请求100次
+            limit: throttle.limit, // 请求100次
           },
         ];
       },
     }),
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
