@@ -10,80 +10,137 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 用户表
 model arc_user {
-  user_id   String  @id @default(uuid())
-  user_name String @db.VarChar(100)
-  nickname String? @db.VarChar(100)
-  password String @db.VarChar(255)
-  email String? @unique @db.VarChar(255)
-  email_code String?  @db.VarChar(16)
-  openid String? @db.VarChar(255)
-  avatar String? @db.VarChar(255)
-  phone String @db.VarChar(255)
-  role Role @default(USER)
-  isActive Boolean @db.Boolean @default(true)
-  articles arc_article[] // 一对多 一个用户多个文章
-  create_time DateTime @default(now())
-  update_time DateTime @updatedAt
+  user_id     String        @id @default(uuid())
+  username    String        @db.VarChar(100)
+  nickname    String?       @db.VarChar(100)
+  password    String        @db.VarChar(255)
+  email       String?       @unique @db.VarChar(255)
+  email_code  String?       @db.VarChar(16)
+  openid      String?       @db.VarChar(255)
+  avatar      String?       @db.VarChar(255)
+  phone       String        @db.VarChar(255)
+  role        Role          @default(USER)
+  isActive    Boolean       @default(true) @db.Boolean
+  articles    arc_article[] // 一对多 一个用户多个文章
+  create_time DateTime      @default(now())
+  update_time DateTime      @updatedAt
 }
 
+// 文章表
 model arc_article {
-  id BigInt @id @db.BigInt
-  title String @db.VarChar(50)
-  content String @db.Text
-  content_html String @db.Text
-  summary String @db.Text
-  cover_url String @db.VarChar(255)
-  view_count Int @db.Integer
-  like_count Int @db.Integer
-  is_recommend Int @db.SmallInt
-  status Status @default(PUBLISH)
-  publish_time DateTime
-  create_time DateTime @default(now())
-  update_time DateTime @updatedAt
-  author arc_user @relation(fields: [author_id], references: [user_id])
-  author_id String @unique
-  // category_id arc_category @relation(fields: [author_id], references: [user_id])
-  // tags arc_tag[]
+  id            BigInt               @id @db.BigInt
+  title         String               @db.VarChar(50)
+  content       String               @db.Text
+  content_html  String               @db.Text
+  summary       String               @db.Text
+  cover_url     String               @db.VarChar(255)
+  view_count    Int                  @db.Integer // 浏览数
+  like_count    Int                  @db.Integer // 点赞数字
+  is_recommend  Int                  @db.SmallInt
+  status        Status               @default(PUBLISH)
+  publish_time  DateTime
+  create_time   DateTime             @default(now())
+  update_time   DateTime             @updatedAt
+  author_id     String // 作者
+  author        arc_user             @relation(fields: [author_id], references: [user_id])
+  category_id   String // 分类 一对多
+  category      arc_category         @relation(fields: [category_id], references: [id])
+  isCommentOpen Boolean              @default(true) // 是否评论开启
+  isTop         Boolean              @default(false) // 评论置顶
+  comment       arc_comment[] // 一对多 一篇文章对于多个评论，
+  tags          arc_article_to_tag[]
 }
 
-model arc_tag {
-  id     Int @id @default(autoincrement())
-  name String @db.VarChar(36)
-  create_time DateTime @default(now())
-  update_time DateTime @updatedAt
-}
-
-model arc_comment {
-  id     Int @id @default(autoincrement())
-  // Post   Post? @relation(fields: [postId], references: [id]) // A comment can have one post
-  postId Int?
-}
-
+// 文章分类表
 model arc_category {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(36)
+  id          String        @id @default(uuid())
+  name        String        @db.VarChar(36)
+  articles    arc_article[]
+  create_time DateTime      @default(now())
+  update_time DateTime      @updatedAt
+}
+
+// 文章标签表
+model arc_tag {
+  id          String               @id @default(uuid())
+  name        String               @db.VarChar(36)
+  articles    arc_article_to_tag[]
+  create_time DateTime             @default(now())
+  update_time DateTime             @updatedAt
+}
+
+model arc_article_to_tag {
+  post       arc_article @relation(fields: [postId], references: [id])
+  postId     BigInt // relation scalar field (used in the `@relation` attribute above)
+  tag        arc_tag     @relation(fields: [tagId], references: [id])
+  tagId      String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime    @default(now())
+  assignedBy String
+
+  @@id([postId, tagId]) // 文章与标签 多对多
+}
+
+// 用户评论回复表
+model arc_comment {
+  id          String       @id @default(uuid())
+  ip          String       @db.VarChar(50) // 评论人ip
+  ua          String       @db.VarChar(50) // 浏览器标识
+  text        String       @db.Text // 评论人内容
+  avatar      String       @db.VarChar(50)
+  email       String       @db.VarChar(50) // 初始评论
+  name        String       @db.VarChar(50) //评论人名称
+  replyName   String       @db.VarChar(50) // 被评论人名称
+  replyEmail  String       @db.VarChar(50) // 被评论人邮箱
+  suggestion  String       @db.Text // 相关检测结果详细信息
+  status      ComStatus
+  putTop      Boolean      @default(false) // 是否置顶
+  isAdmin     Boolean      @default(false) // 是否是管理员
+  anchor      String       @db.VarChar(50) // 锚点
+  parentId    String       @db.VarChar(50) // 评论父级
+  Post        arc_article? @relation(fields: [postId], references: [id]) // A comment can have one post
+  postId      BigInt? // 评论文章id
+  create_time DateTime     @default(now())
+  update_time DateTime     @updatedAt
+}
+
+// 设置导航栏表
+model arc_page {
+  id          Int      @id @default(autoincrement())
+  page_name   String   @db.VarChar(36)
+  path        String   @db.VarChar(36)
   create_time DateTime @default(now())
   update_time DateTime @updatedAt
 }
 
-model arc_page {
-  id Int @id @default(autoincrement())
-  page_name String @db.VarChar(36)
-  path String @db.VarChar(36)
+// 友联表
+model arc_links {
+  id          Int      @id @default(autoincrement())
+  avatar      String   @db.VarChar(50)
+  outline     String   @db.VarChar(36)
+  url         String   @db.VarChar(36)
+  name        String   @db.VarChar(36)
+  isValid     Boolean  @default(true) // 友联状态
   create_time DateTime @default(now())
   update_time DateTime @updatedAt
 }
 
 enum Role {
-  ROOT
-  ADMIN
-  USER
-  VISITOR
+  ROOT // 超级
+  ADMIN // 管理
+  USER // 用户
+  VISITOR // 游客
 }
 
 enum Status {
-  DRAFT
-  PUBLISH
-  DESTROY
+  DRAFT // 草稿
+  PUBLISH // 发布
+  DESTROY // 删除
+}
+
+enum ComStatus {
+  pass // 正常
+  block // 不通过
+  review // 需要人工复查
 }
