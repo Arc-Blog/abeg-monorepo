@@ -9,6 +9,7 @@ import * as Moment from 'moment';
 import * as _ from 'lodash';
 import Logger from 'src/utils/logger';
 import { HttpAdapterHost } from '@nestjs/core';
+import { ZodValidationException } from 'nestjs-zod';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
@@ -23,15 +24,22 @@ export class AllExceptionFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
-    // console.log('--', exception);
+
+    console.log('--', exception);
 
     // 自定义的异常信息结构, 响应用
     const error_info = exception ? exception.stack : exception;
+
     let error_msg = exception.response
       ? exception.response.message
         ? exception.response.message
         : exception.response.errorMsg
       : 'internal server error';
+
+    if (exception instanceof ZodValidationException) {
+      error_msg = exception.getZodError();
+    }
+
     const error_code = exception.response?.errorCode
       ? exception.response.errorCode
       : 500;
@@ -62,7 +70,8 @@ export class AllExceptionFilter implements ExceptionFilter {
       status: status || 500,
       timestamp: Moment().format('YYYY-MM-DD HH:mm:ss'),
       // path: request.url,
-      msg: `${(exception as any).message}`,
+      // msg: `${(exception as any).message}`,
+      msg: error_msg,
     });
   }
 }

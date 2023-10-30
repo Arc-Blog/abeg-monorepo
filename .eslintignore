@@ -10,3 +10,4 @@ pnpm-lock.yaml
 *.prisma
 *.sql
 *.toml
+*.ejs

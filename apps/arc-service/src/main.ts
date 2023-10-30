@@ -20,6 +20,9 @@ async function bootstrap() {
   // 路径前缀：如：http://www.test.com/api/v1/user
   app.setGlobalPrefix('api');
 
+  // 添加代理，以获得正确的ip
+  app.set('trust proxy', 1);
+
   //cors：跨域资源共享，允许跨站访问
   app.enableCors();
 

@@ -6,5 +6,6 @@ public
 .idea
 *.sh
 *.md
+*.ejs
 
 src/assets

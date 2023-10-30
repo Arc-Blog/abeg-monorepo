@@ -24,7 +24,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       request.ip
     } Status code: ${status} Response: ${exception.toString()}`;
     Logger.error(logFormat);
-
+    console.log('http:======', logFormat);
     // 设置响应的状态码
     response.status(status).json({
       statusCode: status || response.statusCode,

@@ -38,6 +38,7 @@ const log4jsConfig = {
       pattern: 'yyyy-MM-dd',
       daysToKeep: 30,
       numBackups: 3,
+      compress: true, // 配置日志文件是否压缩
       keepFileExt: true,
     },
     mail: {

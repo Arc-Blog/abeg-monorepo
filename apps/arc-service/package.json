@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@arc/utils": "workspace:^",
+    "@nestjs-modules/mailer": "^1.9.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
@@ -41,9 +42,12 @@
     "lodash": "^4.17.21",
     "log4js": "^6.9.1",
     "moment": "^2.29.4",
+    "nestjs-zod": "^3.0.0",
+    "nodemailer": "^6.9.7",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "stacktrace-js": "^2.0.2"
+    "stacktrace-js": "^2.0.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

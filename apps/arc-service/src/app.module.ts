@@ -4,6 +4,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
+import { EmailModule } from './module/email/email.module';
 import configuration from './config/configuration';
 import parseEnv from './config/onload.env';
 
@@ -30,6 +31,7 @@ import parseEnv from './config/onload.env';
       },
     }),
     PrismaModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
