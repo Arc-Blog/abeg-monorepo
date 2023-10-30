@@ -1,28 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+// import { UpdateUserDto } from './dto/update-user.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { arc_user as UserModel } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+  constructor(private readonly prismaService: PrismaService) {}
+  /**
+   * 账号密码注册
+   * @param createUser - 前端传入数据
+   */
+  async register(createUser: CreateUserDto): Promise<UserModel> {
+    console.log(createUser);
+    const data = {
+      username: createUser.username,
+      nickname: createUser.nickname,
+      password: createUser.password,
+      email: createUser.email,
+      phone: createUser.phone,
+      role: createUser.role,
+    };
 
-  findAll() {
-    return `This action returns all user`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    return await this.prismaService.arc_user.create({ data });
   }
 }

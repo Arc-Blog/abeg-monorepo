@@ -1,10 +1,13 @@
 # Arc rainbow blog
 
-  <div align="center">
-    <a href="https://nodejs.org/en/"><img src="https://img.shields.io/badge/node->=16.20-orange.svg" /></a>&nbsp;
-    <a href="https://pnpm.io"><img src="https://img.shields.io/badge/pnpm->=8.9.2-deepgreen.svg" /></a>&nbsp;
-    <a href="https://eslint.org"><img src="https://img.shields.io/badge/code style-eslint+prettier-hotpink.svg" /></a>&nbsp;
+<div align="center">
+  <div align=center><img src="./docs/images/logo.png"></div>
+  <a href="https://opensource.org/license/mit"><img src="https://img.shields.io/badge/License-MIT-deep.svg" /></a>&nbsp;
+  <a href="https://nodejs.org/en/"><img src="https://img.shields.io/badge/node->=16.20-orange.svg" /></a>&nbsp;
+  <a href="https://pnpm.io"><img src="https://img.shields.io/badge/pnpm->=8.9.2-deepgreen.svg" /></a>&nbsp;
+  <a href="https://eslint.org"><img src="https://img.shields.io/badge/code style-eslint+prettier-hotpink.svg" /></a>&nbsp;
 </div>
+
 
 ## overview
 
@@ -12,9 +15,10 @@ Arc blog 是由 monorepo 管理前后端项目。
 
 | Project 项目                                                 | Description 描述                                             |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [arc-cms](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-cms) | CMS for Arc 博客包含 Vue3、Vite、Vueuse、TailwindCss、Element-UI 和 Axios。 |
+| [arc-cms](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-cms) | CMS for Arc 博客包含 Vue3、Vite、Vueuse、TailwindCss、Element-Plus 和 Axios。 |
 | [arc-web](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-web) | Arc 博客的网站应用程序，包含React，Next.js13，TailwindCss，styled-components，Axios。 |
-| [arc-service](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-service) | Arc 博客的后端平台，包括Node.js，NestJS，MongoDB，GraphQL，JWT等。 |
+| [arc-service](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-service) | Arc 博客的后端平台，包括Node.js，NestJS，PostgreSQL，Prisma， RBAC，JWT等。 |
+| [@arc/utils](https://github.com/Arc-Blog/abeg-monorepo/tree/master/packages/utils) | 通用工具utils库。                                            |
 
 ### 安装 Node.js 和 [PNPM](https://pnpm.io/)
 
