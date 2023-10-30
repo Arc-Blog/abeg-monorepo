@@ -1,6 +1,10 @@
 # Arc rainbow blog
 
-[![License: MIT](https://camo.githubusercontent.com/fd551ba4b042d89480347a0e74e31af63b356b2cac1116c7b80038f41b04a581/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d4d49542d677265656e2e737667)](https://opensource.org/licenses/MIT) [![](https://img.shields.io/badge/pnpm->=8.9.2-#f69220.svg)](https://pnpm.io) [![](https://img.shields.io/badge/node->=16.20-orange.svg)](https://nodejs.org/en/) [![](https://img.shields.io/badge/code style-eslint+prettier-hotpink.svg)](https://eslint.org/)
+  <div align="center">
+    <a href="https://nodejs.org/en/"><img src="https://img.shields.io/badge/node->=16.20-orange.svg" /></a>&nbsp;
+    <a href="https://pnpm.io"><img src="https://img.shields.io/badge/pnpm->=8.9.2-deepgreen.svg" /></a>&nbsp;
+    <a href="https://eslint.org"><img src="https://img.shields.io/badge/code style-eslint+prettier-hotpink.svg" /></a>&nbsp;
+</div>
 
 ## overview
 
@@ -27,3 +31,7 @@ npm install -g pnpm
 ### 安装 [commitizen](https://github.com/commitizen/cz-cli)
 
 遵循 Angular 团队的提交消息指南，您的 git 提交将由 commitlint 检查，请使用 `git cz` 代替 `git commit` .因此，请全局安装 `commitizen` 。
+
+## [License 许可证](https://github.com/Arc-Blog/abeg-monorepo/blob/master/LICENSE)
+
+根据MIT许可的条款获得许可 [MIT licensed](https://opensource.org/licenses/MIT).
