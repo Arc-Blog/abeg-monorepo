@@ -1,52 +1,68 @@
-import crypto from 'crypto';
-
+import * as CryptoJS from 'crypto-js';
 // AES 128 位密钥可以表示为 32 个字符的十六进制字符串。将需要 24 个 base64 字符。
 // AES 256 位密钥可以表示为 64 个字符的十六进制字符串。将需要 44 个 base64 字符。
 
-// const key = Buffer.from('01234567890123456789012345678901', 'utf-8');
-// const iv = Buffer.from('0123456789012345', 'utf-8');
-/**
- * 十六位十六进制数作为密钥或者编译位
- * @param key 密钥或者密钥偏移位
- * @returns Buffer
- */
-function secretKeyIv(key: string): Buffer {
-  return Buffer.from(key, 'utf-8');
+// 十六位十六进制数作为密钥
+// const SECRET_KEY = CryptoJS.enc.Utf8.parse('1234123412341234');
+// console.log(SECRET_KEY);
+// 十六位十六进制数作为密钥偏移量
+// const SECRET_IV = CryptoJS.enc.Utf8.parse('1234123412341234');
+
+function secretKeyVi(key: string) {
+  return CryptoJS.enc.Utf8.parse(key);
 }
 
 /**
- * AES对称加密函数 aesEncrypt
- * @param data 待加密数据
- * @param key 秘钥
- * @param iv 密钥偏移量
+ * 加密方法
+ * @param data
+ * @returns {string}
  */
-export function aesEncrypt(data: any, key: string, iv: string) {
-  if (typeof data === 'object') data = JSON.stringify(data);
-  console.log(secretKeyIv(key), secretKeyIv(iv));
-  const cipher = crypto.createCipheriv('aes-256-cbc', secretKeyIv(key), secretKeyIv(iv));
-  let encrypted = cipher.update(data, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return encrypted;
+export function aesEncrypt(data, key, vi) {
+  const SECRET_KEY = secretKeyVi(key);
+  const SECRET_IV = secretKeyVi(vi);
+  if (typeof data === 'object') {
+    try {
+      // eslint-disable-next-line no-param-reassign
+      data = JSON.stringify(data);
+    } catch (error) {
+      console.log('encrypt error:', error);
+    }
+  }
+  const dataHex = CryptoJS.enc.Utf8.parse(data);
+  const encrypted = CryptoJS.AES.encrypt(dataHex, SECRET_KEY, {
+    iv: SECRET_IV,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+  return encrypted.ciphertext.toString();
 }
 
 /**
- * 解密
- * @param encrypted 加密数据
- * @param key 秘钥
- * @param iv 密钥偏移量
- * @returns 明文密钥
+ * 解密方法
+ * @param data
+ * @returns {string}
  */
-export function aesDecrypt(encrypted: string, key: string, iv: string) {
-  const decipher = crypto.createDecipheriv('aes-256-cbc', secretKeyIv(key), secretKeyIv(iv));
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
+export function aesDecrypt(data, key, vi) {
+  const SECRET_KEY = secretKeyVi(key);
+  const SECRET_IV = secretKeyVi(vi);
+
+  const encryptedHexStr = CryptoJS.enc.Hex.parse(data);
+  const str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+  const decrypt = CryptoJS.AES.decrypt(str, SECRET_KEY, {
+    iv: SECRET_IV,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+  const decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+  return decryptedStr.toString();
 }
 
-export function compareSync(s: string, encrypted: string, key: string, iv: string) {
+export function compareSync(s: string, encrypted: string, key: string, vi: string) {
+  const SECRET_KEY = secretKeyVi(key);
+  const SECRET_IV = secretKeyVi(vi);
   if (typeof s !== 'string' || typeof encrypted !== 'string')
     throw Error('Illegal arguments: ' + typeof s + ', ' + typeof encrypted);
-  return safeStringCompare(s, aesDecrypt(encrypted, key, iv));
+  return safeStringCompare(s, aesDecrypt(encrypted, SECRET_KEY, SECRET_IV));
 }
 
 /**
@@ -65,7 +81,3 @@ function safeStringCompare(known: string, unknown: string) {
   }
   return diff === 0;
 }
-
-const en = aesEncrypt('abc123', '123456789789', '123456789');
-console.log(en);
-// console.log(compareSync('123465', en, '123456', '456'));

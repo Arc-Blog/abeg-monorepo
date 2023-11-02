@@ -8,17 +8,16 @@
   <a href="https://eslint.org"><img src="https://img.shields.io/badge/code style-eslint+prettier-hotpink.svg" /></a>&nbsp;
 </div>
 
-
 ## overview
 
 Arc blog 是由 monorepo 管理前后端项目。
 
-| Project 项目                                                 | Description 描述                                             |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [arc-cms](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-cms) | CMS for Arc 博客包含 Vue3、Vite、Vueuse、TailwindCss、Element-Plus 和 Axios。 |
-| [arc-web](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-web) | Arc 博客的网站应用程序，包含React，Next.js13，TailwindCss，styled-components，Axios。 |
-| [arc-service](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-service) | Arc 博客的后端平台，包括Node.js，NestJS，PostgreSQL，Prisma， RBAC，JWT等。 |
-| [@arc/utils](https://github.com/Arc-Blog/abeg-monorepo/tree/master/packages/utils) | 通用工具utils库。                                            |
+| Project 项目                                                                          | Description 描述                                                                      |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [arc-cms](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-cms)         | CMS for Arc 博客包含 Vue3、Vite、Vueuse、TailwindCss、Element-Plus 和 Axios。         |
+| [arc-web](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-web)         | Arc 博客的网站应用程序，包含React，Next.js13，TailwindCss，styled-components，Axios。 |
+| [arc-service](https://github.com/Arc-Blog/abeg-monorepo/tree/master/apps/arc-service) | Arc 博客的后端平台，包括Node.js，NestJS，PostgreSQL，Prisma，Log4js，RBAC，JWT等。    |
+| [@arc/utils](https://github.com/Arc-Blog/abeg-monorepo/tree/master/packages/utils)    | 通用工具utils库。                                                                     |
 
 ### 安装 Node.js 和 [PNPM](https://pnpm.io/)
 

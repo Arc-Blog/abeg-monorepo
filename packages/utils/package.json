@@ -1,13 +1,55 @@
 {
   "name": "@arc/utils",
-  "private": true,
+  "private": "false",
   "version": "0.1.0",
+  "type": "module",
   "description": "arc-utils lib",
-  "main": "index.ts",
+  "types": "dist/arc-utils.d.ts",
+  "unpkg": "dist/arc-utils.umd.js",
+  "main": "dist/arc-utils.cjs",
+  "module": "dist/arc-utils.esm.js",
+  "exports": {
+    ".": {
+      "types": "./dist/arc-utils.d.ts",
+      "import": "./dist/arc-utils.esm.js",
+      "require": "./dist/arc-utils.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "index.js",
+    "README.md"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "rollup -c rollup.config.js --watch",
+    "build": "pnpm run clean:dist && rollup --config rollup.config.js",
+    "clean:dist": "rimraf dist"
   },
   "keywords": [],
   "author": "echo9z",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@rollup/plugin-alias": "^5.0.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/node": "^20.8.10",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.2.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-polyfill-node": "^0.12.0",
+    "typescript": "^5.2.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.23.2",
+    "crypto-js": "^4.2.0"
+  }
 }
