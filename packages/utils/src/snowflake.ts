@@ -5,7 +5,7 @@
  * 所以这里设置长度为16位id。将数据中心位调小到1位，将服务器位调小到1位，将序列位调小到10位
  * 这意味着最多支持两个数据中心，每个数据中心最多支持两台服务器
  */
-export default class SnowflakeIdGenerate {
+export class SnowflakeIdGenerate {
   private twepoch = 0;
   private workerIdBits = 1;
   private dataCenterIdBits = 1;

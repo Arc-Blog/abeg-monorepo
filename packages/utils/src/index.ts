@@ -1,11 +1,16 @@
-import { aesDecrypt, aesEncrypt, compareSync } from './cryptogram';
-import SnowflakeId from './snowflake';
+import { aesEncrypt, aesDecrypt, compareSync } from './cryptogram';
+import { SnowflakeIdGenerate } from './snowflake';
 
-const index = {
-  aesDecrypt,
-  aesEncrypt,
-  compareSync,
-  SnowflakeId,
+const arr = (arr: Array<number>) => {
+  return Array.from(arr);
 };
 
-export default index;
+export * from './cryptogram';
+export * from './snowflake';
+export default {
+  arr,
+  aesEncrypt,
+  aesDecrypt,
+  compareSync,
+  SnowflakeIdGenerate,
+};
